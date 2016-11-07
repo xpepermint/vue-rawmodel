@@ -1,12 +1,69 @@
 {
   "name": "vue-contextable",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": " Contextable.js plugin for Vue.js v2 (app context, schema-based form validation and more).",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -Rf ./dist",
+    "prebuild": "npm run clean; mkdir -p ./dist",
+    "build": "babel ./src --out-dir ./dist --copy-files",
+    "prepublish": "npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xpepermint/vue-contextable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xpepermint/vue-contextable/issues"
+  },
+  "homepage": "https://github.com/xpepermint/vue-contextable#readme",
+  "keywords": [
+    "vue",
+    "vue.js",
+    "orm",
+    "odm",
+    "map",
+    "mapping",
+    "context",
+    "contextify",
+    "contextable",
+    "model",
+    "modeling",
+    "document",
+    "class",
+    "apollo",
+    "graphql",
+    "request",
+    "storage",
+    "structure",
+    "structuring",
+    "error",
+    "errors",
+    "handling",
+    "handle",
+    "valid",
+    "validate",
+    "validation",
+    "validator",
+    "validating",
+    "form",
+    "type",
+    "cast",
+    "casting",
+    "history",
+    "tracking",
+    "change",
+    "field",
+    "fields"
+  ],
+  "author": "Kristijan Sedlak (Xpepermint)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "6.18.x",
+    "babel-preset-es2015": "6.18.x",
+    "contextable": "2.1.x"
+  },
+  "peerDependencies": {
+    "contextable": "2.1.x"
+  }
 }
