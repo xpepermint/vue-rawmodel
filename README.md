@@ -2,9 +2,15 @@
 
 # [vue](https://vuejs.org)-[contextable](https://github.com/xpepermint/contextablejs)
 
-> Contextable.js plugin for Vue.js v2 (app context, schema-based form validation and more).
+> Contextable.js plugin for Vue.js v2. Form validation has never been easier!
 
-This plugin integrates the [contextable.js](https://github.com/xpepermint/contextablejs) framework into your [Vue.js](https://vuejs.org) application. Contextable.js has a reach API which significantly simplifies server-side and client-side data validation and manipulation. Use this package to validate web forms using models, for easy server-side or client-side data management, as a central application context and more. Use it with [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) or any other related library. Make sure you check the [Contextable.js API](https://github.com/xpepermint/contextablejs) for details.
+This plugin integrates the [contextable.js](https://github.com/xpepermint/contextablejs) framework into your [Vue.js](https://vuejs.org) application.
+
+[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a reach API which significantly simplifies server-side and client-side data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
+
+[Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune your code.
+
+Make sure you check [contextable.js API](https://github.com/xpepermint/contextablejs) page for details about the framework.
 
 This is a light weight open source package for [Vue.js](https://vuejs.org). The source code is available on [GitHub](https://github.com/xpepermint/vue-contextable) where you can also find our [issue tracker](https://github.com/xpepermint/vue-contextable/issues).
 
@@ -62,7 +68,7 @@ By passing the context instance to the root `Vue` instance as the `context` opti
 
 ## Validation
 
-Object validation has been one of the incentives for creating the [Contextable.js](https://github.com/xpepermint/contextablejs) framework. This is why it's so easy to use [Contextable.js](https://github.com/xpepermint/contextablejs) also for validation a web form. This plugin adds some additional configuration options on the `Vue` object to make the code even more clean.
+Object validation has been one of the incentives for creating the [contextable.js](https://github.com/xpepermint/contextablejs) framework. This plugin brings even more elegant way to do form validation using `contextable.js`.
 
 ```html
 <template>
@@ -79,30 +85,22 @@ Object validation has been one of the incentives for creating the [Contextable.j
 
 <script>
 export default {
-  data () {
-    return {
-      user: new this.$context.User() // initializing a model
-    }
-  },
-  created () {
-    return this.validate(); // validate user immediately after the component is created
-  },
-  watch: {
-    user: {
-      handler (o, n) {
-        return this.validate(); // validate when model changes
-      },
-      deep: true
-    }
-  },
-  methods: {
-    validate (model) { // a helper method
-      return this.user.validate({quiet: true}).then(() => this.$forceUpdate());
-    }
+  contextable: { // contextable namespace
+    validate: [ // recipies for defining reactive models
+      { // reactive model definition
+        dataKey: 'user', // variable name (the name which you would use within the data() block)
+        modelName: 'User', // model class name that exists on the application context (defined earlier)
+        immediate: true // when true, the model is validated immediately when the component is created
+      }
+    ]
   }
 }
 </script>
 ```
+
+Reactive model is an instance of a Model class, provided by the `contextable.js`, on which `Vue.js` tracks changes and reacts/updates when a field on a model changes. You can access reactive model instances by using the `this.{dataKey}` syntax.
+
+You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`.
 
 ## Example
 
