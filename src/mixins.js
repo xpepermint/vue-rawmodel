@@ -15,6 +15,7 @@ export const debounceAsPromised = createDebouncer();
 */
 
 export function createMixins (Vue, options = {}) {
+  let watchers = []; // private watchers
   return {
 
     /*
@@ -46,7 +47,7 @@ export function createMixins (Vue, options = {}) {
             let handler = () => model
               .validate({quiet: true}) // quiet must be true otherwise it throws an error
               .then(() => this.$forceUpdate()) // calling $forceUpdate because the `validate()` method is asynchroneus
-            
+
             return debounceAsPromised({handler, time});
           };
 
@@ -60,7 +61,7 @@ export function createMixins (Vue, options = {}) {
     */
 
     created () {
-      this._watchers = [];
+      watchers = [];
 
       let contextable = Object.assign({}, options, this.$options.contextable); // retrieve contextable option
       let recipies = contextable.validate; // retrieving model definitions
@@ -73,7 +74,7 @@ export function createMixins (Vue, options = {}) {
           let validate = (newVal) => newVal.$validate();
 
           if (reactive) {
-            this._watchers.push(
+            watchers.push(
               this.$watch(dataKey, validate, {deep: true, immediate}) // starts watching the model for changes
             );
           }
@@ -85,10 +86,10 @@ export function createMixins (Vue, options = {}) {
     * Called after the component has been destroyed.
     */
 
-    destroyed () {
-      if (this._watchers) { // unwatch the model
-        this._watchers.forEach((unwatch) => unwatch());
-        this._watchers = [];
+    beforeDestroy () {
+      if (watchers) { // unwatch the model
+        watchers.forEach((unwatch) => unwatch());
+        watchers = [];
       }
     }
 

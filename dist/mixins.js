@@ -27,6 +27,7 @@ var debounceAsPromised = exports.debounceAsPromised = (0, _utils.createDebouncer
 function createMixins(Vue) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+  var watchers = []; // private watchers
   return {
 
     /*
@@ -106,7 +107,7 @@ function createMixins(Vue) {
     */
 
     created: function created() {
-      this._watchers = [];
+      watchers = [];
 
       var contextable = Object.assign({}, options, this.$options.contextable); // retrieve contextable option
       var recipies = contextable.validate; // retrieving model definitions
@@ -129,7 +130,7 @@ function createMixins(Vue) {
             };
 
             if (reactive) {
-              this._watchers.push(this.$watch(dataKey, validate, { deep: true, immediate: immediate }) // starts watching the model for changes
+              watchers.push(this.$watch(dataKey, validate, { deep: true, immediate: immediate }) // starts watching the model for changes
               );
             }
           }
@@ -155,13 +156,13 @@ function createMixins(Vue) {
     * Called after the component has been destroyed.
     */
 
-    destroyed: function destroyed() {
-      if (this._watchers) {
+    beforeDestroy: function beforeDestroy() {
+      if (watchers) {
         // unwatch the model
-        this._watchers.forEach(function (unwatch) {
+        watchers.forEach(function (unwatch) {
           return unwatch();
         });
-        this._watchers = [];
+        watchers = [];
       }
     }
   };
