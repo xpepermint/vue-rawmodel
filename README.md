@@ -110,7 +110,7 @@ You can manually validate the model by calling the `this.{dataKey}.$validate()` 
 
 ## Example
 
-An example application is available in the `./example` folder.
+An example application is available in the `./example` folder. You can run the `npm run example` command to start the server.
 
 ## License (MIT)
 

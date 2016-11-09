@@ -7,7 +7,8 @@
     "clean": "rm -Rf ./dist",
     "prebuild": "npm run clean; mkdir -p ./dist",
     "build": "babel ./src --out-dir ./dist --copy-files",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "example": "npm run build; NODE_ENV=development webpack-dev-server --context ./example --content-base ./example --config ./example/webpack.config.js --open"
   },
   "repository": {
     "type": "git",
