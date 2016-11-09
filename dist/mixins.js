@@ -62,18 +62,19 @@ function createMixins(Vue) {
             var dataKey = recipe.dataKey,
                 modelName = recipe.modelName; // define reactive models
 
-            var delay = (0, _utils.chooseOption)([300, contextable.debounce, recipe.debounce], 'number');
+            var time = (0, _utils.chooseOption)([300, contextable.debounce, recipe.debounce], 'number');
             var model = new _this.$context[modelName]();
 
             model.$validate = function () {
               // adding configured validate method
-              return debounceAsPromised(function () {
+              var handler = function handler() {
                 return model.validate({ quiet: true }) // quiet must be true otherwise it throws an error
                 .then(function () {
                   return _this.$forceUpdate();
-                }) // calling $forceUpdate because the `validate()` method is asynchroneus
-                ;
-              }, delay);
+                });
+              }; // calling $forceUpdate because the `validate()` method is asynchroneus
+
+              return debounceAsPromised({ handler: handler, time: time });
             };
 
             Vue.util.defineReactive(_this, dataKey, model); // define the model in the `data` block

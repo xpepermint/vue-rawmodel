@@ -1,6 +1,6 @@
 {
   "name": "vue-contextable",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Contextable.js plugin for Vue.js v2. Form validation has never been easier!",
   "main": "./dist/index.js",
   "scripts": {
@@ -64,5 +64,8 @@
   },
   "peerDependencies": {
     "contextable": "2.x.x"
+  },
+  "dependencies": {
+    "promised-debounce": "0.3.x"
   }
 }

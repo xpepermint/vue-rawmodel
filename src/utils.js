@@ -1,23 +1,10 @@
+import {createDebouncer} from 'promised-debounce';
+
 /*
 * Creates a debounced function.
 */
 
-export function createDebouncer () {
-  let timer = null;
-
-  return function (fn, wait) {
-    var resolve;
-    var promise = new Promise((r) => resolve = r).then(() => fn.apply(this));
-
-    if (timer)  clearTimeout(timer);
-    timer = setTimeout(() => {
-      timer = null;
-      resolve();
-    }, wait);
-
-    return promise;
-  };
-}
+export {createDebouncer};
 
 /*
 * Returns a last boolean value from the provided array of booleans.
