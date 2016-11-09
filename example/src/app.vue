@@ -25,7 +25,9 @@ export default {
       {
         dataKey: 'user',
         modelName: 'User',
-        immediate: true
+        reactive: false,
+        immediate: false,
+        debounce: 0
       }
     ]
   }

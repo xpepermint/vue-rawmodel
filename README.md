@@ -8,7 +8,7 @@ This plugin integrates the [contextable.js](https://github.com/xpepermint/contex
 
 [Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a reach API which significantly simplifies server-side and client-side data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
 
-[Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune your code.
+[Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune the integration.
 
 Make sure you check [contextable.js API](https://github.com/xpepermint/contextablejs) page for details about the framework.
 
@@ -34,7 +34,11 @@ When used with a module system, you must explicitly install `vue-contextable` vi
 import Vue from 'vue';
 import VueContextable from 'vue-contextable';
 
-Vue.use(VueContextable);
+Vue.use(VueContextable, {
+  reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
+  immediate: false, // [optional] when `true`, all reactively defined models are validated immediately after the component is created,
+  debounce: 300 // [optional] the number of milliseconds to wait before running model validations
+});
 ```
 
 ## Getting Started
@@ -88,9 +92,11 @@ export default {
   contextable: { // contextable namespace
     validate: [ // recipies for defining reactive models
       { // reactive model definition
-        dataKey: 'user', // variable name (the name which you would use within the data() block)
-        modelName: 'User', // model class name that exists on the application context (defined earlier)
-        immediate: true // when true, the model is validated immediately when the component is created
+        dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
+        modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
+        reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
+        immediate: false, // [optional] when true, the model is validated immediately when the component is created
+        debounce: 300 // [optional] the number of milliseconds to wait before running model validations
       }
     ]
   }
@@ -98,9 +104,9 @@ export default {
 </script>
 ```
 
-Reactive model is an instance of a Model class, provided by the `contextable.js`, on which `Vue.js` tracks changes and reacts/updates when a field on a model changes. You can access reactive model instances by using the `this.{dataKey}` syntax.
+Reactive model is an instance of a Model class, provided by the `contextable.js`, on which `Vue.js` can track changes and re-render when a model field changes. You can access reactive model instances by using the `this.{dataKey}` syntax (you are actually accessing the `data`).
 
-You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`.
+You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`. This is useful when the `reactive` options is set to `false`.
 
 ## Example
 

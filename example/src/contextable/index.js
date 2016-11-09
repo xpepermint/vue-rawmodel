@@ -3,7 +3,11 @@ import VueContextable from '../../../dist';
 import {Context} from 'contextable';
 import {userSchema} from './schemas/users';
 
-Vue.use(VueContextable); // installing the plugin
+Vue.use(VueContextable, { // installing the plugin
+  // reactive: true,
+  // immediate: true,
+  // debounce: 1000
+});
 
 const context = new Context(); // initializing application context
 
