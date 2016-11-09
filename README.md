@@ -80,7 +80,7 @@ Object validation has been one of the incentives for creating the [contextable.j
     <!-- input field -->
     <input type="text" v-model="user.name" placeholder="User name"/>
     <span v-if="user.$name.hasErrors()">
-      {{ user.$name.errors | firstErrorMessage }}
+      {{ user.$name.errors | firstMessage }}
     </span>
     <!-- buttons -->
     <button v-bind:disabled="user.hasErrors()">Add User</button>
