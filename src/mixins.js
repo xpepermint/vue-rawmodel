@@ -47,7 +47,7 @@ export function createMixins (Vue, options = {}) {
             let handler = () => model
               .validate({quiet: true}) // quiet must be true otherwise it throws an error
               .then(() => this.$forceUpdate()) // calling $forceUpdate because the `validate()` method is asynchroneus
-              .catch(console.log);
+              .catch(console.log); // useful also for browser camabilities errors
             return debounceAsPromised({handler, time});
           };
 

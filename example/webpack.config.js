@@ -2,7 +2,10 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: [
+    'babel-polyfill',
+    './src/main.js'
+  ],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -20,7 +23,15 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015'],
+          plugins: [
+            'transform-object-assign',
+            'transform-regenerator',
+            'syntax-async-functions'
+          ],
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -35,10 +46,5 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue'
     }
-  },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true
-  },
-  devtool: '#eval-source-map'
+  }
 }

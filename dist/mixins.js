@@ -74,7 +74,7 @@ function createMixins(Vue) {
                   return _this.$forceUpdate();
                 }) // calling $forceUpdate because the `validate()` method is asynchroneus
                 .catch(console.log);
-              };
+              }; // useful also for browser camabilities errors
               return debounceAsPromised({ handler: handler, time: time });
             };
 
