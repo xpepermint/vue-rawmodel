@@ -8,7 +8,7 @@
     "prebuild": "npm run clean; mkdir -p ./dist",
     "build": "babel ./src --out-dir ./dist --copy-files",
     "prepublish": "npm run build",
-    "example": "npm run build; NODE_ENV=development webpack-dev-server --context ./example --content-base ./example --config ./example/webpack.config.js --open"
+    "example": "npm run build; NODE_ENV=development webpack-dev-server --context ./example --content-base ./example --config ./example/webpack.config.js --open --quiet"
   },
   "repository": {
     "type": "git",
@@ -60,13 +60,22 @@
   "author": "Kristijan Sedlak (Xpepermint)",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "6.18.x",
-    "babel-preset-es2015": "6.18.x"
+    "babel-cli": "6.18.0",
+    "babel-core": "6.18.2",
+    "babel-loader": "6.2.7",
+    "babel-preset-es2015": "6.18.x",
+    "contextable": "2.4.0",
+    "css-loader": "0.25.0",
+    "file-loader": "0.9.0",
+    "vue-loader": "9.8.1",
+    "webpack": "2.1.0-beta.25",
+    "webpack-dev-server": "2.1.0-beta.10"
   },
   "peerDependencies": {
-    "contextable": "2.x.x"
+    "contextable": "2.4.x"
   },
   "dependencies": {
-    "promised-debounce": "0.3.x"
+    "promised-debounce": "0.3.3",
+    "vue": "2.0.5"
   }
 }

@@ -72,9 +72,9 @@ function createMixins(Vue) {
                 return model.validate({ quiet: true }) // quiet must be true otherwise it throws an error
                 .then(function () {
                   return _this.$forceUpdate();
-                });
-              }; // calling $forceUpdate because the `validate()` method is asynchroneus
-
+                }) // calling $forceUpdate because the `validate()` method is asynchroneus
+                .catch(console.log);
+              };
               return debounceAsPromised({ handler: handler, time: time });
             };
 
