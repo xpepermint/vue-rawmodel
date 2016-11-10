@@ -52,8 +52,26 @@ const context = new Context(); // context initialization
 
 context.defineModel('User', new Schema({ // defining a model
   fields: {
-    name: {
-      type: 'String'
+    type: 'String',
+    validate: [ // field validations
+      { // validator recipe
+        validator: 'presence', // validator name
+        message: 'is required' // validator error message
+      }
+    ]
+  },
+  instanceMethods: {
+    async save () { // create new user on the remote server
+      try {
+        await this.$validate(); // reactively validate
+        await fetch('/users', {method: 'POST'}) // send request to the remote server
+          .then((r) => r.json()) // read JSON server response
+          .then((r) => this.$applyErrors(r.errors)); // load and displays possible server errors
+        return this.isValid(); // return true if a user has been created
+      }
+      catch (e) {
+        return false; // user has not been created
+      }
     }
   }
 }));
@@ -70,13 +88,13 @@ const app = new Vue({
 
 By passing the context instance to the root `Vue` instance as the `context` option, the `$context` property is injected into every child component.
 
-## Validation
+## Form Example
 
 Object validation has been one of the incentives for creating the [contextable.js](https://github.com/xpepermint/contextablejs) framework. This plugin brings even more elegant way to do form validation using `contextable.js`.
 
 ```html
 <template>
-  <form novalidate>
+  <form novalidate v-on:submit.prevent="submit">
     <!-- input field -->
     <input type="text" v-model="user.name" placeholder="User name"/>
     <span v-if="user.$name.hasErrors()">
@@ -99,6 +117,11 @@ export default {
         debounce: 300 // [optional] the number of milliseconds to wait before running model validations
       }
     ]
+  },
+  methods: {
+    submit () {
+      return this.user.$save();
+    }
   }
 }
 </script>
@@ -108,9 +131,83 @@ Reactive model is an instance of a Model class, provided by the `contextable.js`
 
 You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`. This is useful when the `reactive` options is set to `false`.
 
+## Integration
+
+It's natural for [contextable.js](https://github.com/xpepermint/contextablejs) to be flexible and easily integratable with other technologies. Everything that's added to the context instance is automagically available in every model as `this.$context.{my-variable}` by default. [Vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com/) and similar tehnologies represent a common scenario for such integration.
+
+```js
+import $store from './store'; // imagine that you've already define the vuex store
+import apollo from './apollo'; // imagine that you've already define the vuex store
+
+let context = new Context({$store, apollo});
+...
+let user = new context.User();
+user.$context.$store; // => vuex store instance
+user.$context.apollo; // => apollo client instance
+```
+
+## API
+
+This plugin adds some useful features to [contextable.js](https://github.com/xpepermint/contextablejs), which help us write even less code.
+
+### Component
+
+By passing the context instance to the root `Vue` instance as the `context` option, the `$context` property is injected into every child component. The plugin also defines the `contextable` namespace, which can be used for reactive validating of a model.
+
+```html
+<script>
+export default {
+  contextable: { // contextable namespace
+    validate: [ // recipies for defining reactive models
+      { // reactive model definition
+        dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
+        modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
+        reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
+        immediate: false, // [optional] when true, the model is validated immediately when the component is created
+        debounce: 300 // [optional] the number of milliseconds to wait before running model validations
+      }
+    ]
+  },
+  methods: {
+    getContext () {
+      return this.$context; // accessing context instance
+    }
+  }
+}
+</script>
+```
+
+### Model
+
+When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied. Note that reactive methods automatically runs the `$forceUpdate()` command which re-renders the component.
+
+**Model.prototype.$component**
+
+> A reference to the component.
+
+**Model.prototype.$validate({quiet})**: Promise(Model)
+
+> A reactive duplicate of the `validate()` method which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| quiet | Boolean | No | false | When set to `true`, a validation error is thrown.
+
+**Model.prototype.$applyErrors(errors)**: Model
+
+> A reactive duplicate of the `applyErrors()` method which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| errors | Array | No | [] | An array of errors.
+
 ## Example
 
 An example application is available in the `./example` folder. You can run the `npm run example` command to start the server.
+
+## Tutorials
+
+See [vue-js-cheatsheet](https://www.gitbook.com/book/xpepermint/vue-js-cheatsheet/) for more.
 
 ## License (MIT)
 
