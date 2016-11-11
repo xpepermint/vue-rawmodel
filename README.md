@@ -63,7 +63,7 @@ context.defineModel('User', new Schema({ // defining a model
     }
   },
   instanceMethods: {
-    async save () { // create new user on the remote server
+    async $save () { // create new user on the remote server
       try {
         await this.$validate(); // reactively validate
         await fetch('/users', {method: 'POST'}) // send request to the remote server
