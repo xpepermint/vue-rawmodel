@@ -52,13 +52,15 @@ const context = new Context(); // context initialization
 
 context.defineModel('User', new Schema({ // defining a model
   fields: {
-    type: 'String',
-    validate: [ // field validations
-      { // validator recipe
-        validator: 'presence', // validator name
-        message: 'is required' // validator error message
-      }
-    ]
+    name: {
+      type: 'String',
+      validate: [ // field validations
+        { // validator recipe
+          validator: 'presence', // validator name
+          message: 'is required' // validator error message
+        }
+      ]
+    }
   },
   instanceMethods: {
     async save () { // create new user on the remote server
