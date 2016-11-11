@@ -78,7 +78,7 @@ export function createMixins (Vue, options = {}) {
           let {dataKey} = recipe;
           let reactive = chooseOption([true, contextable.reactive, recipe.reactive], 'boolean');
           let immediate = chooseOption([false, contextable.immediate, recipe.immediate], 'boolean');
-          let validate = (newVal) => newVal.$validate();
+          let validate = (newVal) => newVal.$validate({quiet: true});
 
           if (reactive) {
             watchers.push(

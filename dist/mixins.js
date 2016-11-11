@@ -134,7 +134,7 @@ function createMixins(Vue) {
             var reactive = (0, _utils.chooseOption)([true, contextable.reactive, recipe.reactive], 'boolean');
             var immediate = (0, _utils.chooseOption)([false, contextable.immediate, recipe.immediate], 'boolean');
             var validate = function validate(newVal) {
-              return newVal.$validate();
+              return newVal.$validate({ quiet: true });
             };
 
             if (reactive) {
