@@ -43,8 +43,6 @@ export function createMixins (Vue, options = {}) {
           let time = chooseOption([300, contextable.debounce, recipe.debounce], 'number');
           let model = new this.$context[modelName]();
 
-          model.$component = this; // adding reference to the component
-
           model.$validate = (opts) => { // adding configured validate method
             let handler = () => model
               .validate(opts) // quiet must be true otherwise it throws an error

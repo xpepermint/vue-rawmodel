@@ -66,8 +66,6 @@ function createMixins(Vue) {
             var time = (0, _utils.chooseOption)([300, contextable.debounce, recipe.debounce], 'number');
             var model = new _this.$context[modelName]();
 
-            model.$component = _this; // adding reference to the component
-
             model.$validate = function (opts) {
               // adding configured validate method
               var handler = function handler() {

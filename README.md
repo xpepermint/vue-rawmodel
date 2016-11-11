@@ -181,10 +181,6 @@ export default {
 
 When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied. Note that reactive methods automatically runs the `$forceUpdate()` command which re-renders the component.
 
-**Model.prototype.$component**
-
-> A reference to the component.
-
 **Model.prototype.$validate({quiet})**: Promise(Model)
 
 > A reactive duplicate of the `validate()` method which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
