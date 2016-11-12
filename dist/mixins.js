@@ -4,6 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.debounceAsPromised = undefined;
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 exports.createMixins = createMixins;
 
 var _utils = require('./utils');
@@ -13,6 +22,8 @@ var _filters = require('./filters');
 var filters = _interopRequireWildcard(_filters);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
 * Debounce method for delayed validation
@@ -49,7 +60,7 @@ function createMixins(Vue) {
         this._context = context;
       }
 
-      var contextable = Object.assign({}, options, this.$options.contextable); // retrieve contextable option
+      var contextable = (0, _extends3.default)({}, options, this.$options.contextable); // retrieve contextable option
       var recipies = contextable.validate; // retrieving model definitions
       if (recipies) {
         var _iteratorNormalCompletion = true;
@@ -87,7 +98,7 @@ function createMixins(Vue) {
             Vue.util.defineReactive(_this, dataKey, model); // define the model in the `data` block
           };
 
-          for (var _iterator = recipies[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = (0, _getIterator3.default)(recipies), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             _loop();
           }
         } catch (err) {
@@ -115,7 +126,7 @@ function createMixins(Vue) {
     created: function created() {
       watchers = [];
 
-      var contextable = Object.assign({}, options, this.$options.contextable); // retrieve contextable option
+      var contextable = (0, _extends3.default)({}, options, this.$options.contextable); // retrieve contextable option
       var recipies = contextable.validate; // retrieving model definitions
       if (recipies) {
         var _iteratorNormalCompletion2 = true;
@@ -124,7 +135,7 @@ function createMixins(Vue) {
 
         try {
 
-          for (var _iterator2 = recipies[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          for (var _iterator2 = (0, _getIterator3.default)(recipies), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var recipe = _step2.value;
             // loop through model definitions
             var dataKey = recipe.dataKey;
