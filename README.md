@@ -124,6 +124,12 @@ export default {
     submit () {
       return this.user.$save();
     }
+  },
+  beforeCreate () {
+    // Use the `populate()` method (e.g. `this.user.populate({name: 'John'})`) to populate the user
+    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic to a
+    // custom instance or class method within your schema file (as we did for the `submit` method - we
+    // created a custom method `$save`).
   }
 }
 </script>
@@ -174,6 +180,11 @@ export default {
     getContext () {
       return this.$context; // accessing context instance
     }
+  },
+  beforeCreate () {
+    // Use the `populate()` method (e.g. `this.user.populate({name: 'John'})`) to populate the user
+    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic to a
+    // custom instance or class method within your schema file.
   }
 }
 </script>
