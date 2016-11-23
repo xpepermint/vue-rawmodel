@@ -10,6 +10,7 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 var _typeof3 = _interopRequireDefault(_typeof2);
 
 exports.chooseOption = chooseOption;
+exports.retrieveValue = retrieveValue;
 
 var _promisedDebounce = require('promised-debounce');
 
@@ -29,4 +30,12 @@ function chooseOption(values, type) {
   return values.filter(function (b) {
     return (typeof b === 'undefined' ? 'undefined' : (0, _typeof3.default)(b)) === type;
   }).reverse()[0];
+}
+
+/*
+* Returns a last boolean value from the provided array of booleans.
+*/
+
+function retrieveValue(fn) {
+  return typeof fn === 'function' ? fn() : fn;
 }

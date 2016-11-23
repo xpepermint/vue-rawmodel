@@ -1,4 +1,4 @@
-import {createMixins} from './mixins';
+import {createMixin} from './mixins';
 
 /*
 * Contextable plugin class.
@@ -17,7 +17,7 @@ export default class VueContextable {
     });
 
     Vue.mixin( // upgrading all vue components
-      createMixins(Vue, options)
+      createMixin(Vue, options)
     );
   }
 }

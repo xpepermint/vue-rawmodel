@@ -46,7 +46,7 @@ var VueContextable = function () {
       });
 
       Vue.mixin( // upgrading all vue components
-      (0, _mixins.createMixins)(Vue, options));
+      (0, _mixins.createMixin)(Vue, options));
     }
   }]);
   return VueContextable;

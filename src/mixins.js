@@ -1,20 +1,15 @@
 import {
-  createDebouncer,
-  chooseOption
+  chooseOption,
+  retrieveValue
 } from './utils';
 import * as filters from './filters';
-
-/*
-* Debounce method for delayed validation
-*/
-
-export const debounceAsPromised = createDebouncer();
+import {defineReactiveModel} from './models';
 
 /*
 * Component mixins.
 */
 
-export function createMixins (Vue, options = {}) {
+export function createMixin (Vue, options = {}) {
   let watchers = []; // private watchers
   return {
 
@@ -39,24 +34,18 @@ export function createMixins (Vue, options = {}) {
       if (recipies) {
 
         for (let recipe of recipies) { // loop through model definitions
-          let {dataKey, modelName} = recipe; // define reactive models
-          let time = chooseOption([300, contextable.debounce, recipe.debounce], 'number');
-          let model = new this.$context[modelName]();
+          let {dataKey, modelName} = recipe;
+          let debounceTime = chooseOption([300, options.debounceTime, recipe.debounceTime], 'number');
+          let modelData = retrieveValue(recipe.modelData);
 
-          model.$validate = (opts) => { // adding configured validate method
-            let handler = () => model
-              .validate(opts) // quiet must be true otherwise it throws an error
-              .then(() => this.$forceUpdate()) // calling $forceUpdate because the `validate()` method is asynchroneus
-            return debounceAsPromised({handler, time});
-          };
+          Vue.util.defineReactive(this, dataKey, null); // define reactive variable for the model
 
-          model.$applyErrors = (errors) => { // adding configured method for error hydrationa
-            model.applyErrors(errors);
-            this.$forceUpdate();
-            return model;
-          };
-
-          Vue.util.defineReactive(this, dataKey, model); // define the model in the `data` block
+          defineReactiveModel(this, { // set reactive method to reactive variable above
+            dataKey,
+            modelName,
+            modelData,
+            debounceTime
+          });
         }
       }
     },

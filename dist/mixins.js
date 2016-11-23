@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.debounceAsPromised = undefined;
 
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
@@ -13,7 +12,7 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-exports.createMixins = createMixins;
+exports.createMixin = createMixin;
 
 var _utils = require('./utils');
 
@@ -21,21 +20,17 @@ var _filters = require('./filters');
 
 var filters = _interopRequireWildcard(_filters);
 
+var _models = require('./models');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
-* Debounce method for delayed validation
-*/
-
-var debounceAsPromised = exports.debounceAsPromised = (0, _utils.createDebouncer)();
-
-/*
 * Component mixins.
 */
 
-function createMixins(Vue) {
+function createMixin(Vue) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   var watchers = []; // private watchers
@@ -52,8 +47,6 @@ function createMixins(Vue) {
     */
 
     beforeCreate: function beforeCreate() {
-      var _this = this;
-
       var context = this.$options.context; // retrieve context instance
       if (context) {
         // memorize the context instance so we can retrieve it in a root component
@@ -68,38 +61,24 @@ function createMixins(Vue) {
         var _iteratorError = undefined;
 
         try {
-          var _loop = function _loop() {
+
+          for (var _iterator = (0, _getIterator3.default)(recipies), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var recipe = _step.value;
             // loop through model definitions
             var dataKey = recipe.dataKey,
-                modelName = recipe.modelName; // define reactive models
+                modelName = recipe.modelName;
 
-            var time = (0, _utils.chooseOption)([300, contextable.debounce, recipe.debounce], 'number');
-            var model = new _this.$context[modelName]();
+            var debounceTime = (0, _utils.chooseOption)([300, options.debounceTime, recipe.debounceTime], 'number');
+            var modelData = (0, _utils.retrieveValue)(recipe.modelData);
 
-            model.$validate = function (opts) {
-              // adding configured validate method
-              var handler = function handler() {
-                return model.validate(opts) // quiet must be true otherwise it throws an error
-                .then(function () {
-                  return _this.$forceUpdate();
-                });
-              }; // calling $forceUpdate because the `validate()` method is asynchroneus
-              return debounceAsPromised({ handler: handler, time: time });
-            };
+            Vue.util.defineReactive(this, dataKey, null); // define reactive variable for the model
 
-            model.$applyErrors = function (errors) {
-              // adding configured method for error hydrationa
-              model.applyErrors(errors);
-              _this.$forceUpdate();
-              return model;
-            };
-
-            Vue.util.defineReactive(_this, dataKey, model); // define the model in the `data` block
-          };
-
-          for (var _iterator = (0, _getIterator3.default)(recipies), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            _loop();
+            (0, _models.defineReactiveModel)(this, { // set reactive method to reactive variable above
+              dataKey: dataKey,
+              modelName: modelName,
+              modelData: modelData,
+              debounceTime: debounceTime
+            });
           }
         } catch (err) {
           _didIteratorError = true;

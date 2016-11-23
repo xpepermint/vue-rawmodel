@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueContextable from '../../../dist';
 import {Context} from 'contextable';
-import {userSchema} from './schemas/users';
+import userSchema from './schemas/user';
 
 Vue.use(VueContextable);
 

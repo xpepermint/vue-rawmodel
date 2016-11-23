@@ -1,6 +1,7 @@
 import {Schema} from 'contextable';
+import bookSchema from './book';
 
-export const userSchema = new Schema({ // model schema
+export default new Schema({ // model schema
   fields: { // model fields
     name: { // field name
       type: 'String', // field type
@@ -11,18 +12,13 @@ export const userSchema = new Schema({ // model schema
         }
       ]
     },
-    email: {
-      type: 'String',
-      validate: [
-        {
-          validator: 'presence',
-          message: 'is required'
-        },
-        {
-          validator: 'stringEmail',
-          message: 'invalid email'
-        }
-      ]
+    book: {
+      type: bookSchema,
+      // defaultValue: {}
+    },
+    books: {
+      type: [bookSchema],
+      // defaultValue: [{}]
     }
   }
 });

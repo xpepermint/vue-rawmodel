@@ -37,7 +37,7 @@ import VueContextable from 'vue-contextable';
 Vue.use(VueContextable, {
   reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
   immediate: false, // [optional] when `true`, all reactively defined models are validated immediately after the component is created,
-  debounce: 300 // [optional] the number of milliseconds to wait before running model validations
+  debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
 });
 ```
 
@@ -114,9 +114,10 @@ export default {
       { // reactive model definition
         dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
         modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
+        modelData: {}, // [optional] initial data for populating the model (can also be a function)
         reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
         immediate: false, // [optional] when true, the model is validated immediately when the component is created
-        debounce: 300 // [optional] the number of milliseconds to wait before running model validations
+        debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
       }
     ]
   },
@@ -126,22 +127,22 @@ export default {
     }
   },
   beforeCreate () {
-    // Use the `populate()` method (e.g. `this.user.populate({name: 'John'})`) to populate the user
-    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic to a
-    // custom instance or class method within your schema file (as we did for the `submit` method - we
-    // created a custom method `$save`).
+    // Use the `$populate()` method (e.g. `this.user.$populate({name: 'John'})`) to populate the
+    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic
+    // into a custom instance or class method within your schema file (as we did for the `submit`
+    // method - we created a custom method `$save`).
   }
 }
 </script>
 ```
 
-Reactive model is an instance of a Model class, provided by the `contextable.js`, on which `Vue.js` can track changes and re-render when a model field changes. You can access reactive model instances by using the `this.{dataKey}` syntax (you are actually accessing the `data`).
+Reactive model is an extended instance of a Model class, provided by the `contextable.js`, on which `Vue.js` can track changes and re-render when a model field changes. You can access reactive model instances by using the `this.{dataKey}` syntax (you are actually accessing the `data`).
 
 You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`. This is useful when the `reactive` options is set to `false`.
 
 ## Integration
 
-It's natural for [contextable.js](https://github.com/xpepermint/contextablejs) to be flexible and easily integratable with other technologies. Everything that's added to the context instance is automagically available in every model as `this.$context.{my-variable}` by default. [Vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com/) and similar tehnologies represent a common scenario for such integration.
+It's natural for [contextable.js](https://github.com/xpepermint/contextablejs) to be flexible and easily integratable with other technologies. Everything that's added to the context instance is automagically available in every model as `this.$context.{my-variable}` by default. [Vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com/) and similar technologies represent a common scenario for such integration.
 
 ```js
 import $store from './store'; // imagine that you've already define the vuex store
@@ -170,9 +171,10 @@ export default {
       { // reactive model definition
         dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
         modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
+        modelData: {}, // [optional] initial data for populating the model (can also be a function)
         reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
         immediate: false, // [optional] when true, the model is validated immediately when the component is created
-        debounce: 300 // [optional] the number of milliseconds to wait before running model validations
+        debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
       }
     ]
   },
@@ -182,9 +184,10 @@ export default {
     }
   },
   beforeCreate () {
-    // Use the `populate()` method (e.g. `this.user.populate({name: 'John'})`) to populate the user
-    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic to a
-    // custom instance or class method within your schema file.
+    // Use the `$populate()` method (e.g. `this.user.$populate({name: 'John'})`) to populate the
+    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic
+    // into a custom instance or class method within your schema file (as we did for the `submit`
+    // method - we created a custom method `$save`).
   }
 }
 </script>
@@ -194,14 +197,6 @@ export default {
 
 When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied. Note that reactive methods automatically runs the `$forceUpdate()` command which re-renders the component.
 
-**Model.prototype.$validate({quiet})**: Promise(Model)
-
-> A reactive duplicate of the `validate()` method which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| quiet | Boolean | No | false | When set to `true`, a validation error is thrown.
-
 **Model.prototype.$applyErrors(errors)**: Model
 
 > A reactive duplicate of the `applyErrors()` method which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
@@ -209,6 +204,64 @@ When a new model is created through the `contextable` API within a component, so
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | errors | Array | No | [] | An array of errors.
+
+**Model.prototype.$build()**: Model
+
+> Rebuilds model's reactivity system.
+
+```js
+export default {
+  contextable: {
+    validate: [
+      {
+        dataKey: 'user',
+        modelName: 'User'
+      }
+    ]
+  },
+  beforeCreate () {
+    this.user.book = {title: 'foo'}; // sets model's field data but the reactivity listeners are removed
+    this.user.books = [{title: 'bar'}]; // sets model's field data but the reactivity listeners are removed
+    this.user.$build(); // rebuilds the reactivity system
+  }
+}
+```
+
+**Model.prototype.$populate(data)**: Model
+
+> Reactive alternative of the `populate()` method which applies data to a model.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| data | Object | Yes | - | Data object.
+
+```js
+export default {
+  contextable: {
+    validate: [
+      {
+        dataKey: 'user',
+        modelName: 'User'
+      }
+    ]
+  },
+  beforeCreate () {
+    this.user.$populate({ // sets fields and rebuilds
+      name: null,
+      book: {},
+      books: [{}]
+    });
+  }
+}
+```
+
+**Model.prototype.$validate({quiet})**: Promise(Model)
+
+> Reactive alternative of the `validate()` method which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| quiet | Boolean | No | false | When set to `true`, a validation error is thrown.
 
 ## Example
 
