@@ -1,6 +1,6 @@
 {
   "name": "vue-contextable",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Contextable.js plugin for Vue.js v2. Form validation has never been easier!",
   "main": "./dist/index.js",
   "scripts": {

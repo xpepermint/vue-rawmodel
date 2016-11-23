@@ -6,7 +6,7 @@
 
 This plugin integrates the [contextable.js](https://github.com/xpepermint/contextablejs) framework into your [Vue.js](https://vuejs.org) application.
 
-[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a reach API which significantly simplifies server-side and client-side data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
+[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a reach API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
 
 [Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune the integration.
 
@@ -68,7 +68,7 @@ context.defineModel('User', new Schema({ // defining a model
         await this.$validate(); // reactively validate
         await fetch('/users', {method: 'POST'}) // send request to the remote server
           .then((r) => r.json()) // read JSON server response
-          .then((r) => this.$applyErrors(r.errors)); // load and displays possible server errors
+          .then((r) => this.$applyErrors(r.errors)); // load and display possible server errors
         return this.isValid(); // return true if a user has been created
       }
       catch (e) {
@@ -114,7 +114,7 @@ export default {
       { // reactive model definition
         dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
         modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
-        modelData: {}, // [optional] initial data for populating the model (can also be a function)
+        modelData: {}, // [optional] initial data for pre-populating a model (can also be a function which returns an object)
         reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
         immediate: false, // [optional] when true, the model is validated immediately when the component is created
         debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
@@ -171,7 +171,7 @@ export default {
       { // reactive model definition
         dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
         modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
-        modelData: {}, // [optional] initial data for populating the model (can also be a function)
+        modelData: {}, // [optional] initial data for pre-populating a model (can also be a function which returns an object)
         reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
         immediate: false, // [optional] when true, the model is validated immediately when the component is created
         debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
@@ -195,11 +195,11 @@ export default {
 
 ### Model
 
-When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied. Note that reactive methods automatically runs the `$forceUpdate()` command which re-renders the component.
+When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied.
 
 **Model.prototype.$applyErrors(errors)**: Model
 
-> A reactive duplicate of the `applyErrors()` method which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
+> A reactive alternative of the `applyErrors()` method which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
@@ -220,8 +220,8 @@ export default {
     ]
   },
   beforeCreate () {
-    this.user.book = {title: 'foo'}; // sets model's field data but the reactivity listeners are removed
-    this.user.books = [{title: 'bar'}]; // sets model's field data but the reactivity listeners are removed
+    this.user.book = {title: 'foo'}; // sets field data but the reactivity listeners are removed
+    this.user.books = [{title: 'bar'}]; // sets field data but the reactivity listeners are removed
     this.user.$build(); // rebuilds the reactivity system
   }
 }

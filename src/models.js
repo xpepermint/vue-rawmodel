@@ -34,7 +34,10 @@ export function defineReactiveModel (vm, config) {
     * Reactive alternative of the `populate()` method.
     */
 
-    $populate (modelData) {
+    $populate (data) {
+      this.populate(data);
+
+      let modelData = this.toObject();
       return defineReactiveModel(vm, Object.assign({}, config, {modelData}));
     }
 

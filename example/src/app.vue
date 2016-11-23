@@ -22,6 +22,7 @@
         {{ book.$title.errors | firstMessage }}
       </span>
     </div>
+    <button v-on:click.prevent="newBook">+ New Book</button>
     <!-- model -->
     <pre>{{ user }}</pre>
     <!-- buttons -->
@@ -39,21 +40,27 @@ export default {
       {
         dataKey: 'user',
         modelName: 'User',
+        modelData: () => ({
+          name: null,
+          book: {},
+          books: [{}]
+        }),
         reactive: true,
         immediate: true,
-        debounceTime: 500
+        debounceTime: 0
       }
     ]
   },
   beforeCreate () {
     this.user.$populate({
-      name: null,
-      book: {},
-      books: [{}]
+      book: {title: 'foo'} // set only `book` field
     });
-    // this.user.book = {title: 'asdasd'};
-    // this.user.books = [{title: 'asdasd'}];
-    // this.user.$build();
+  },
+  methods: {
+    newBook () {
+      this.user.books.push({}); // change model structure
+      this.user.$build(); // rebuild reactivity
+    }
   }
 }
 </script>

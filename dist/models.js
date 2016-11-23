@@ -85,7 +85,10 @@ function defineReactiveModel(vm, config) {
 
     }, {
       key: '$populate',
-      value: function $populate(modelData) {
+      value: function $populate(data) {
+        this.populate(data);
+
+        var modelData = this.toObject();
         return defineReactiveModel(vm, (0, _extends3.default)({}, config, { modelData: modelData }));
       }
 
