@@ -981,14 +981,14 @@ content-type@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.2.tgz#b7d113aee7a8dd27bd21133c4dc2529df1721eed"
 
-contextable@^2.9.0:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/contextable/-/contextable-2.9.5.tgz#c2257a4cbf2e1eea876ef69c2ab6916b15620a22"
+contextable@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/contextable/-/contextable-2.10.0.tgz#c527c19c694c9533684906ccc3627278b23e03c0"
   dependencies:
     babel-runtime "6.18.x"
-    handleable "0.15.x"
-    objectschema "2.21.x"
-    typeable "0.19.x"
+    handleable "0.16.x"
+    objectschema "2.22.x"
+    typeable "0.20.x"
 
 convert-source-map@^1.1.0:
   version "1.3.0"
@@ -1587,9 +1587,9 @@ handle-thing@^1.2.4:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
 
-handleable@0.15.x:
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/handleable/-/handleable-0.15.2.tgz#cb9836392041d1a8603e6b8112306434a3f71019"
+handleable@0.16.x:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/handleable/-/handleable-0.16.0.tgz#9f8043c0cf1c719477dead1dd260e60c598616c5"
   dependencies:
     babel-runtime "6.18.x"
 
@@ -2275,15 +2275,15 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-objectschema@2.21.x:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/objectschema/-/objectschema-2.21.0.tgz#1691171c47a86e4e9b7ee63937717466bbcc9230"
+objectschema@2.22.x:
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/objectschema/-/objectschema-2.22.0.tgz#277f076d9d3917e70ac05feef0d5f859e440a125"
   dependencies:
     babel-runtime "6.18.x"
     lodash.isequal "4.4.x"
     lodash.merge "4.6.x"
-    typeable "0.19.x"
-    validatable "0.19.x"
+    typeable "0.20.x"
+    validatable "0.20.x"
 
 obuf@^1.0.0, obuf@^1.1.0:
   version "1.1.1"
@@ -2697,9 +2697,9 @@ process@^0.11.0, process@~0.11.0:
   version "0.11.9"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.9.tgz#7bd5ad21aa6253e7da8682264f1e11d11c0318c1"
 
-promised-debounce@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/promised-debounce/-/promised-debounce-0.4.0.tgz#6049e9d5da050f52b793a1c04e30067255b94ebe"
+promised-debounce@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/promised-debounce/-/promised-debounce-0.4.2.tgz#602044c723e6bd12c8ba0d116ff880c7e7f9e770"
   dependencies:
     babel-runtime "6.18.x"
 
@@ -3286,9 +3286,9 @@ type-is@~1.6.13:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
-typeable@0.19.x:
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/typeable/-/typeable-0.19.2.tgz#2b0fc605a481bf6d75f4e086d0cc051343549592"
+typeable@0.20.x:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/typeable/-/typeable-0.20.0.tgz#f979c91207b7b4921377b605ee21e9847672d6e0"
 
 uglify-js@~2.7.3:
   version "2.7.4"
@@ -3378,12 +3378,12 @@ v8flags@^2.0.10:
   dependencies:
     user-home "^1.1.1"
 
-validatable@0.19.x:
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/validatable/-/validatable-0.19.3.tgz#3d1e73d1b701e716bdf0268468e0f8d6e569731f"
+validatable@0.20.x:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/validatable/-/validatable-0.20.1.tgz#990f6361781f0f069374e3b55bf6c2753d64f875"
   dependencies:
     babel-runtime "6.18.x"
-    typeable "0.19.x"
+    typeable "0.20.x"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
@@ -3439,9 +3439,9 @@ vue-style-loader@^1.0.0:
   dependencies:
     loader-utils "^0.2.7"
 
-vue-template-compiler@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.1.0.tgz#b920111b239b2c4234a5ffd78ca42cb664f06559"
+vue-template-compiler@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.1.3.tgz#af252df5848c15980cbf32d88a253db053290949"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -3450,9 +3450,9 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.3.0.tgz#4a0f2a0bbef8b5731f78add8263cd86fe4f643ca"
 
-vue@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.0.tgz#293ba3efaaca846aa6bcbfac45cf8524cc597e3d"
+vue@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.3.tgz#20161b8684777754fd9823134b38f13c1e197882"
 
 watchpack@^1.0.0:
   version "1.1.0"
