@@ -76,7 +76,7 @@ function defineReactiveModel(vm, config) {
       */
 
       value: function $build() {
-        return this.$populate(this.toObject());
+        return this.$populate(this.serialize());
       }
 
       /*
@@ -88,7 +88,7 @@ function defineReactiveModel(vm, config) {
       value: function $populate(data) {
         this.populate(data);
 
-        var modelData = this.toObject();
+        var modelData = this.serialize();
         return defineReactiveModel(vm, (0, _extends3.default)({}, config, { modelData: modelData }));
       }
 

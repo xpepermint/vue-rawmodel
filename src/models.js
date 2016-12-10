@@ -27,7 +27,7 @@ export function defineReactiveModel (vm, config) {
     */
 
     $build () {
-      return this.$populate(this.toObject());
+      return this.$populate(this.serialize());
     }
 
     /*
@@ -37,7 +37,7 @@ export function defineReactiveModel (vm, config) {
     $populate (data) {
       this.populate(data);
 
-      let modelData = this.toObject();
+      let modelData = this.serialize();
       return defineReactiveModel(vm, Object.assign({}, config, {modelData}));
     }
 

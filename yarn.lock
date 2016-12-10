@@ -981,13 +981,13 @@ content-type@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.2.tgz#b7d113aee7a8dd27bd21133c4dc2529df1721eed"
 
-contextable@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/contextable/-/contextable-2.10.0.tgz#c527c19c694c9533684906ccc3627278b23e03c0"
+contextable@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/contextable/-/contextable-3.0.0.tgz#5ad2e26149cde9a6e14505cea937229be4274e0d"
   dependencies:
     babel-runtime "6.18.x"
     handleable "0.16.x"
-    objectschema "2.22.x"
+    objectschema "3.7.x"
     typeable "0.20.x"
 
 convert-source-map@^1.1.0:
@@ -2275,9 +2275,9 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-objectschema@2.22.x:
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/objectschema/-/objectschema-2.22.0.tgz#277f076d9d3917e70ac05feef0d5f859e440a125"
+objectschema@3.7.x:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/objectschema/-/objectschema-3.7.2.tgz#87b801093d2a7c84a7ea962f0028d645b39cefab"
   dependencies:
     babel-runtime "6.18.x"
     lodash.isequal "4.4.x"
