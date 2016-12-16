@@ -6,7 +6,7 @@
 
 This plugin integrates the [contextable.js](https://github.com/xpepermint/contextablejs) framework into your [Vue.js](https://vuejs.org) application.
 
-[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a reach API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
+[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a rich API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
 
 [Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune the integration.
 
