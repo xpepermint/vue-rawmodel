@@ -2,6 +2,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  devServer: {
+    contentBase: path.join(__dirname, 'example'),
+    hot: false,
+    inline: false,
+    compress: true
+  },
   entry: [
     'babel-polyfill',
     './example/src/main.js'
