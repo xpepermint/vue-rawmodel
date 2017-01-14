@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import App from './app.vue';
-
-import context from './contextable';
+import * as models from './models';
 
 new Vue({
-  context,
+  models,
   el: '#app',
   render: h => h(App)
 });

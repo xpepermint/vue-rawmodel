@@ -1,271 +1,237 @@
-[![NPM Version](https://badge.fury.io/js/vue-contextable.svg)](https://badge.fury.io/js/vue-contextable)&nbsp;[![Dependency Status](https://gemnasium.com/xpepermint/vue-contextable.svg)](https://gemnasium.com/xpepermint/vue-contextable)
+[![NPM Version](https://badge.fury.io/js/vue-rawmodel.svg)](https://badge.fury.io/js/vue-rawmodel)&nbsp;[![Dependency Status](https://gemnasium.com/xpepermint/vue-rawmodel.svg)](https://gemnasium.com/xpepermint/vue-rawmodel)
 
-# [vue](https://vuejs.org)-[contextable](https://github.com/xpepermint/contextablejs)
+# [vue](https://vuejs.org)-[rawmodel](https://github.com/xpepermint/rawmodeljs)
 
-> Contextable.js plugin for Vue.js v2. Form validation has never been easier!
+> RawModel.js plugin for Vue.js v2. Form validation has never been easier!
 
-This plugin integrates the [contextable.js](https://github.com/xpepermint/contextablejs) framework into your [Vue.js](https://vuejs.org) application.
+This plugin integrates [RawModel.js](https://github.com/xpepermint/rawmodeljs) framework into your [Vue.js](https://vuejs.org) application.
 
-[Contextable.js](https://github.com/xpepermint/contextablejs) is a simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling. It has a rich API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
+[RawModel.js](https://github.com/xpepermint/rawmodeljs) is a simple framework which provides a strongly-typed JavaScript object with support for validation and error handling. It has a rich API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
 
-[Contextable.js](https://github.com/xpepermint/contextablejs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `contextable.js` and still leaves you freedom to customize and fine-tune the integration.
+[RawModel.js](https://github.com/xpepermint/rawmodeljs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `RawModel.js` and still leaves you freedom to customize and fine-tune the integration.
 
-Make sure you check [contextable.js API](https://github.com/xpepermint/contextablejs) page for details about the framework.
+Make sure you check [RawModel.js API](https://github.com/xpepermint/rawmodeljs) page for details about the framework.
 
-This is a light weight open source package for [Vue.js](https://vuejs.org). The source code is available on [GitHub](https://github.com/xpepermint/vue-contextable) where you can also find our [issue tracker](https://github.com/xpepermint/vue-contextable/issues).
-
-<img src="giphy.gif" width="300" />
+This is a light weight open source package for [Vue.js](https://vuejs.org) written with TypeScript. It's actively maintained and ready for production environments. The source code is available on [GitHub](https://github.com/xpepermint/vue-rawmodel) where you can also find our [issue tracker](https://github.com/xpepermint/vue-rawmodel/issues).
 
 ## Related Projects
 
-* [Contextable.js](https://github.com/xpepermint/contextablejs): Simple, unopinionated and minimalist framework for creating context objects with support for unopinionated ORM, object schemas, type casting, validation and error handling and more.
+* [RawModel.js](https://github.com/xpepermint/rawmodeljs): Strongly-typed JavaScript object with support for validation and error handling.
 
 ## Installation
 
 Run the command below to install the package.
 
 ```
-$ npm install --save vue-contextable contextable
+$ npm install --save vue-rawmodel rawmodel
 ```
 
-When used with a module system, you must explicitly install `vue-contextable` via `Vue.use()`.
+This package uses promises thus you need to use [Promise polyfill](https://github.com/taylorhakes/promise-polyfill) when promises are not supported.
+
+When used with a module system, you must explicitly install `vue-rawmodel` via `Vue.use()`.
 
 ```js
 import Vue from 'vue';
-import VueContextable from 'vue-contextable';
+import VueRawModel from 'vue-rawmodel';
 
-Vue.use(VueContextable, {
-  reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
-  immediate: false, // [optional] when `true`, all reactively defined models are validated immediately after the component is created,
-  debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
-});
+Vue.use(VueRawModel);
 ```
 
 ## Getting Started
 
-Initialize the application context and define a user model.
+This package provides a special class called `ReactiveModel` which extends from `Model` class provided by [RawModel.js](https://github.com/xpepermint/rawmodeljs). You don't need to attach the plugin to Vue. ReactiveModel is completely independent thus you can use it directly. Below is an example of a simple reactive model called `User` with a single field `name`.
 
 ```js
-import {Context, Schema} from 'contextable';
+import {ReactiveModel} from 'vue-rawmodel';
 
-const context = new Context(); // context initialization
+class User extends ReactiveModel {
+  constructor (data = {}) {
+    super(data); // initializing parent class
 
-context.defineModel('User', new Schema({ // defining a model
-  fields: {
-    name: {
-      type: 'String',
+    this.defineField('name', { // defining class property `name`
+      type: 'String', // setting type casting
       validate: [ // field validations
         { // validator recipe
           validator: 'presence', // validator name
           message: 'is required' // validator error message
         }
       ]
-    }
-  },
-  instanceMethods: {
-    async $save () { // create new user on the remote server
-      try {
-        await this.$validate(); // reactively validate
-        await fetch('/users', {method: 'POST'}) // send request to the remote server
-          .then((r) => r.json()) // read JSON server response
-          .then((r) => this.$applyErrors(r.errors)); // load and display possible server errors
-        return this.isValid(); // return true if a user has been created
-      }
-      catch (e) {
-        return false; // user has not been created
-      }
-    }
+      // check the API for all available options
+    });
   }
-}));
+}
 ```
 
-Attach the context to your Vue.js application.
+We can optionally pass models to the root `Vue` instance as the `models` option. This will populate the `$models` property which is then injected into every child component.
 
 ```js
 const app = new Vue({
-  context, // injecting context into child components
+  models: { User }, // [optional] injecting models into child components (later available as this.$models.User)
   ...
 });
 ```
 
-By passing the context instance to the root `Vue` instance as the `context` option, the `$context` property is injected into every child component.
-
 ## Form Example
 
-Object validation has been one of the incentives for creating the [contextable.js](https://github.com/xpepermint/contextablejs) framework. This plugin brings even more elegant way to do form validation using `contextable.js`.
+Object validation has been one of the incentives for creating  [RawModel.js](https://github.com/xpepermint/rawmodeljs) framework. This plugin brings even more elegant way to do form validation.
 
 ```html
 <template>
   <form novalidate v-on:submit.prevent="submit">
     <!-- input field -->
     <input type="text" v-model="user.name" placeholder="User name"/>
-    <span v-if="user.$name.hasErrors()">
-      {{ user.$name.errors | firstMessage }}
+    <span v-if="user.getField('name').hasErrors()">
+      {{ user.getField('name').errors | firstMessage }}
     </span>
     <!-- buttons -->
-    <button v-bind:disabled="user.hasErrors()">Add User</button>
+    <button v-bind:disabled="user.hasErrors()">Submit</button>
   </form>
 </template>
 
 <script>
 export default {
-  contextable: { // contextable namespace
-    validate: [ // recipies for defining reactive models
-      { // reactive model definition
-        dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
-        modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
-        modelData: {}, // [optional] initial data for pre-populating a model (can also be a function which returns an object)
-        reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
-        immediate: false, // [optional] when true, the model is validated immediately when the component is created
-        debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
-      }
-    ]
+  data () {
+    return {
+      user: new this.$models.User({
+        vm: this, // instance of Vue's VM
+        dataKey: 'user', // name of data model key
+        name: 'John Smith' // initializing the `name` field
+      })
+    };
   },
   methods: {
     submit () {
-      return this.user.$save();
+      // Send data to the remote server
     }
-  },
-  beforeCreate () {
-    // Use the `$populate()` method (e.g. `this.user.$populate({name: 'John'})`) to populate the
-    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic
-    // into a custom instance or class method within your schema file (as we did for the `submit`
-    // method - we created a custom method `$save`).
   }
 }
 </script>
 ```
 
-Reactive model is an extended instance of a Model class, provided by the `contextable.js`, on which `Vue.js` can track changes and re-render when a model field changes. You can access reactive model instances by using the `this.{dataKey}` syntax (you are actually accessing the `data`).
-
-You can manually validate the model by calling the `this.{dataKey}.$validate()` method which is asynchronous and returns a `Promise`. This is useful when the `reactive` options is set to `false`.
-
-## Integration
-
-It's natural for [contextable.js](https://github.com/xpepermint/contextablejs) to be flexible and easily integratable with other technologies. Everything that's added to the context instance is automagically available in every model as `this.$context.{my-variable}` by default. [Vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com/) and similar technologies represent a common scenario for such integration.
-
-```js
-import $store from './store'; // imagine that you've already define the vuex store
-import apollo from './apollo'; // imagine that you've already define the vuex store
-
-let context = new Context({$store, apollo});
-...
-let user = new context.User();
-user.$context.$store; // => vuex store instance
-user.$context.apollo; // => apollo client instance
-```
-
-## API
-
-This plugin adds some useful features to [contextable.js](https://github.com/xpepermint/contextablejs), which help us write even less code.
-
-### Component
-
-By passing the context instance to the root `Vue` instance as the `context` option, the `$context` property is injected into every child component. The plugin also defines the `contextable` namespace, which can be used for reactive validating of a model.
-
-```html
-<script>
-export default {
-  contextable: { // contextable namespace
-    validate: [ // recipies for defining reactive models
-      { // reactive model definition
-        dataKey: 'user', // [required] variable name (the name which you would use within the data() block)
-        modelName: 'User', // [required] model class name that exists on the application context (defined earlier)
-        modelData: {}, // [optional] initial data for pre-populating a model (can also be a function which returns an object)
-        reactive: true, // [optional] when `true`, models are watched and validated when a model field is changed
-        immediate: false, // [optional] when true, the model is validated immediately when the component is created
-        debounceTime: 300 // [optional] the number of milliseconds to wait before running model validations
-      }
-    ]
-  },
-  methods: {
-    getContext () {
-      return this.$context; // accessing context instance
-    }
-  },
-  beforeCreate () {
-    // Use the `$populate()` method (e.g. `this.user.$populate({name: 'John'})`) to populate the
-    // model (`this.user`) when displaying an edit form. It's a good practice to move this logic
-    // into a custom instance or class method within your schema file (as we did for the `submit`
-    // method - we created a custom method `$save`).
-  }
-}
-</script>
-```
-
-### Model
-
-When a new model is created through the `contextable` API within a component, some useful reactive methods and variables are applied.
-
-**Model.prototype.$applyErrors(errors)**: Model
-
-> A reactive alternative of the `applyErrors()` method which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| errors | Array | No | [] | An array of errors.
-
-**Model.prototype.$build()**: Model
-
-> Rebuilds model's reactivity system.
+Use the `$populate()` method to reactively apply data to your model.
 
 ```js
 export default {
-  contextable: {
-    validate: [
-      {
-        dataKey: 'user',
-        modelName: 'User'
-      }
-    ]
-  },
-  beforeCreate () {
-    this.user.book = {title: 'foo'}; // sets field data but the reactivity listeners are removed
-    this.user.books = [{title: 'bar'}]; // sets field data but the reactivity listeners are removed
-    this.user.$build(); // rebuilds the reactivity system
-  }
-}
-```
-
-**Model.prototype.$populate(data)**: Model
-
-> Reactive alternative of the `populate()` method which applies data to a model.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| data | Object | Yes | - | Data object.
-
-```js
-export default {
-  contextable: {
-    validate: [
-      {
-        dataKey: 'user',
-        modelName: 'User'
-      }
-    ]
-  },
-  beforeCreate () {
-    this.user.$populate({ // sets fields and rebuilds
-      name: null,
-      book: {},
-      books: [{}]
+  ...
+  created () {
+    this.user.$populate({
+      name: 'John Smith'
     });
   }
 }
 ```
 
-**Model.prototype.$validate({quiet})**: Promise(Model)
+Use Vue watchers to install real-time form validation.
 
-> Reactive alternative of the `validate()` method which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
+```js
+export default {
+  ...
+  watch: {
+    user: {
+      handler: (user) => user.$validate({debounce: 300}), // reactively validate fields and display errors
+      deep: true, // always required
+      immediate: true // set this to validate immediately after the form is created
+    }
+  }
+}
+```
+
+Check the [RawModel.js API](https://github.com/xpepermint/rawmodeljs#api) page and this [package API section](#api) for details.
+
+## API
+
+This plugin extends [RawModel.js](https://github.com/xpepermint/rawmodeljs) functionality, which help us write reactive code in Vue. If you don't need reactivity then you can use [RawModel.js](https://github.com/xpepermint/rawmodeljs) directly.
+
+### ReactiveModel
+
+**ReactiveModel({vm, dataKey, parent, ...data})**
+
+> Abstract reactive class which represents a strongly-typed JavaScript object. This class extends from [Model](https://github.com/xpepermint/rawmodeljs#model-class) and adds new reactive capabilities.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| quiet | Boolean | No | false | When set to `true`, a validation error is thrown.
+| vm | Vue | No | - | Vue VM instance.
+| dataKey | String | No | - | The name of the data key.
+| parent | Model | No | - | Parent model instance.
+| data | Object | No | - | Data for populating model fields.
+```
+
+**ReactiveModel.prototype.$applyErrors(errors)**: ReactiveModel
+
+> A reactive alternative of method `applyErrors()` which deeply populates fields with the provided `errors` (useful for loading validation errors received from the server).
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| errors | Array | No | [] | An array of errors.
+
+**ReactiveModel.prototype.$clear()**: ReactiveModel
+
+> Reactive alternative of method `clear()` which sets all fileds to `null`.
+
+**ReactiveModel.prototype.$fake()**: ReactiveModel
+
+> Reactive alternative of method `fake()` which resets fields then sets fields to their fake values.
+
+**ReactiveModel.prototype.$forceUpdate ()**: ReactiveModel
+
+> Force the `vm` instance to re-render.
+
+**ReactiveModel.prototype.$handle (error, {quiet, debounce})**: Promise<ReactiveModel>
+
+> Reactive alternative of method `handle()` which handles the error and throws an error if the error can not be handled.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| error | Any | Yes | - | Error to be handled.
+| quiet | Boolean | No | true | When set to false, a handled validation error is thrown. This doesn't affect the unhandled errors (they are always thrown).
+| debounce | Boolean | 0 | - | Number of milliseconds to wait before running validations.
+
+**ReactiveModel.prototype.$invalidate ()**: ReactiveModel
+
+> Reactive alternative of method `invalidate()` which removes fields errors.
+
+**ReactiveModel.prototype.isReactive (): Boolean**
+
+> Returns `true` when reactive properties (`vm` and `dataKey`) are set.
+
+**ReactiveModel.prototype.$populate (data)**: ReactiveModel
+
+> Reactive alternative of method `populate()` which applies data to a model.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| data | Object | Yes | - | Data object.
+
+**ReactiveModel.prototype.$rebuild ()**: ReactiveModel
+
+> Rebuilds model's reactivity system.
+
+**ReactiveModel.prototype.$reset ()**: ReactiveModel
+
+> Reactive alternative of method `reset()` which sets each model field to its default value.
+
+**ReactiveModel.prototype.$rollback ()**: ReactiveModel
+
+> Reactive alternative of method `rollback()` which sets each field to its initial value (value before last commit).
+
+**ReactiveModel.prototype.$validate({quiet, debounce})**: Promise(ReactiveModel)
+
+> Reactive alternative of method `validate()` which validates the model fields and throws a validation error if not all fields are valid unless the `quiet` is set to true.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| quiet | Boolean | No | true | When set to `true`, a validation error is thrown.
+| debounce | Boolean | 0 | - | Number of milliseconds to wait before running validations.
+
+### Filters
+
+**firstMessage**
+
+> Extracts the first error message from a list of errors.
 
 ## Example
 
-An example application is available in the `./example` folder. You can run the `npm run example` command to start the server.
+An example is available in the `./example` folder which you can run with the `npm run example` command. There is also [vue-example](https://github.com/xpepermint/vue-example) app available which you should take a look.
 
 ## Tutorials
 
