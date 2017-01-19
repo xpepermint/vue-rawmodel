@@ -1,6 +1,6 @@
 {
   "name": "vue-rawmodel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "RawModel.js plugin for Vue.js v2. Form validation has never been easier!",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
