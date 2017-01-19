@@ -154,7 +154,7 @@ This plugin extends [RawModel.js](https://github.com/xpepermint/rawmodeljs) func
 | dataKey | String | No | - | The name of the data key.
 | parent | Model | No | - | Parent model instance.
 | data | Object | No | - | Data for populating model fields.
-```
+
 
 **ReactiveModel.prototype.$applyErrors(errors)**: ReactiveModel
 
