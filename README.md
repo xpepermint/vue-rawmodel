@@ -8,7 +8,7 @@ This plugin integrates [RawModel.js](https://github.com/xpepermint/rawmodeljs) f
 
 [RawModel.js](https://github.com/xpepermint/rawmodeljs) is a simple framework which provides a strongly-typed JavaScript object with support for validation and error handling. It has a rich API which significantly simplifies **server-side** and **client-side** data validation and manipulation. Because it's an unopinionated framework it flawlessly integrates with popular modules like [vuex](http://vuex.vuejs.org/en/index.html), [apollo-client](http://dev.apollodata.com) and other related libraries.
 
-[RawModel.js](https://github.com/xpepermint/rawmodeljs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful context-aware and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `RawModel.js` and still leaves you freedom to customize and fine-tune the integration.
+[RawModel.js](https://github.com/xpepermint/rawmodeljs) together with [Vue.js](https://vuejs.org) represents a web framework on steroids. Thanks to its powerful and flexible model objects, a form validation has never been easier. This plugin brings even more elegant way to do form validation using `RawModel.js` and still leaves you freedom to customize and fine-tune the integration.
 
 Make sure you check [RawModel.js API](https://github.com/xpepermint/rawmodeljs) page for details about the framework.
 
