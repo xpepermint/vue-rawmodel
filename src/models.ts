@@ -103,7 +103,7 @@ export class ReactiveModel extends Model {
   }
 
   /*
-  * Reactive alternative of method `fake()` which resets fields then sets fields 
+  * Reactive alternative of method `fake()` which resets fields then sets fields
   * to their fake values.
   */
 
@@ -114,12 +114,12 @@ export class ReactiveModel extends Model {
   }
 
   /*
-  * Reactive alternative of method `handle()` which handles the error and throws 
+  * Reactive alternative of method `handle()` which handles the error and throws
   * an error if the error can not be handled.
   */
 
   async $handle (error: any, {
-    debounce = 0, 
+    debounce = 0,
     quiet = true
   }: {
     debounce?: number,
@@ -145,7 +145,7 @@ export class ReactiveModel extends Model {
   }
 
   /*
-  * Reactive alternative of method `reset()` which sets each model field to 
+  * Reactive alternative of method `reset()` which sets each model field to
   * its default value.
   */
 
@@ -156,7 +156,7 @@ export class ReactiveModel extends Model {
   }
 
   /*
-  * Reactive alternative of method `rollback()` which sets each field to its 
+  * Reactive alternative of method `rollback()` which sets each field to its
   * initial value (value before last commit).
   */
 
@@ -165,7 +165,7 @@ export class ReactiveModel extends Model {
     this.$forceUpdate();
     return this;
   }
-  
+
   /*
   * Reactive alternative of method `validate()` which validates the model
   * fields and throws a validation error if not all fields are valid when the
@@ -173,7 +173,7 @@ export class ReactiveModel extends Model {
   */
 
   public $validate ({
-    debounce = 0, 
+    debounce = 0,
     quiet = true
   }: {
     debounce?: number,

@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import * as Vue from 'vue';
 import VueRawModel from '../../';
 import {User} from './user';
 import {Book} from './book';

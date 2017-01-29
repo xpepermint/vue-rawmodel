@@ -19,7 +19,7 @@ export class User extends ReactiveModel {
       handle: [
         {
           handler: 'block',
-          block (e) { return true; },
+          block () { return true; },
           message: 'unknown error'
         }
       ]

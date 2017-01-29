@@ -4,9 +4,17 @@
     "target": "es3",
     "noImplicitAny": false,
     "removeComments": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
     "lib": ["es2015.promise", "es2015.iterable", "es5", "dom.iterable"]
-  }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

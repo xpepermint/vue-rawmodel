@@ -2,7 +2,6 @@
   <div>
     <h1>RawModel Example</h1>
     <form novalidate v-on:submit.prevent="submit">
-      <h1>User Form</h1>
       <!-- inputs: user -->
       <div>
         <input type="text" v-model="user.name" placeholder="user.name"/>
