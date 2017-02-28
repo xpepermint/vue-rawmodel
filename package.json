@@ -1,6 +1,6 @@
 {
   "name": "vue-rawmodel",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "RawModel.js plugin for Vue.js v2. Form validation has never been easier!",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -60,7 +60,7 @@
   "author": "Kristijan Sedlak (Xpepermint)",
   "license": "MIT",
   "devDependencies": {
-    "rawmodel": "^1.6.0",
+    "rawmodel": "^1.7.0",
     "ts-loader": "^2.0.0",
     "typescript": "^2.1.5",
     "vue": "^2.1.10",
@@ -68,7 +68,7 @@
     "vue-template-compiler": "2.1.10"
   },
   "peerDependencies": {
-    "rawmodel": "^1.6.0"
+    "rawmodel": "^1.7.0"
   },
   "dependencies": {
     "promised-debounce": "^0.4.2"
