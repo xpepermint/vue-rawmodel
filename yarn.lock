@@ -2,6 +2,22 @@
 # yarn lockfile v1
 
 
+"@types/lodash.isequal@^4.5.3":
+  version "4.5.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.isequal/-/lodash.isequal-4.5.6.tgz#ff42a1b8e20caa59a97e446a77dc57db923bc02b"
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.merge@^4.6.4":
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.merge/-/lodash.merge-4.6.7.tgz#0af6555dd8bc6568ef73e5e0d820a027362946b1"
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.191"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
+
 abbrev@1:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
@@ -2272,11 +2288,11 @@ gulplog@^1.0.0:
   dependencies:
     glogg "^1.0.0"
 
-handleable@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/handleable/-/handleable-0.20.0.tgz#eac46cc2c9c86aa9b01a10558f5130c8644e0f8c"
+handleable@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/handleable/-/handleable-0.25.1.tgz#2254c4b0dfe7718402a1d2345a97f8dbebb418db"
   dependencies:
-    lodash.merge "4.6.0"
+    lodash.merge "^4.6.1"
 
 handlebars@^4.0.5:
   version "4.0.6"
@@ -2677,8 +2693,8 @@ is-typedarray@~1.0.0:
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
 
 is-url@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/is-url/-/is-url-1.2.2.tgz#498905a593bf47cc2d9e7f738372bbf7696c7f26"
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/is-url/-/is-url-1.2.4.tgz#04a4df46d28c4cff3d73d01ff06abeb318a1aa52"
 
 is-utf8@^0.2.0, is-utf8@~0.2.0:
   version "0.2.1"
@@ -2920,9 +2936,13 @@ lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
 
-lodash.isequal@^4.0.0, lodash.isequal@^4.4.0:
+lodash.isequal@^4.0.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.4.0.tgz#6295768e98e14dc15ce8d362ef6340db82852031"
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -2936,9 +2956,9 @@ lodash.memoize@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
-lodash.merge@4.6.0, lodash.merge@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
+lodash.merge@^4.6.1:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
 
 lodash.restparam@^3.0.0:
   version "3.6.1"
@@ -3862,15 +3882,17 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-rawmodel@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/rawmodel/-/rawmodel-1.5.0.tgz#68b2f10f32484a9bd3e936ffe146d6dbc2b913c0"
+rawmodel@^1.7.0:
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/rawmodel/-/rawmodel-1.33.0.tgz#1680e0b6763e0b08fdb498b417f0b5d6e6c5f126"
   dependencies:
-    handleable "^0.20.0"
-    lodash.isequal "^4.4.0"
-    lodash.merge "^4.6.0"
-    typeable "^2.0.0"
-    validatable "^0.24.0"
+    "@types/lodash.isequal" "^4.5.3"
+    "@types/lodash.merge" "^4.6.4"
+    handleable "^0.25.1"
+    lodash.isequal "^4.5.0"
+    lodash.merge "^4.6.1"
+    typeable "^2.4.1"
+    validatable "^0.34.2"
 
 rc@^1.1.2, rc@~1.1.6:
   version "1.1.6"
@@ -4590,9 +4612,9 @@ type-is@~1.6.13:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
-typeable@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/typeable/-/typeable-2.0.1.tgz#725ea716d37ba0472cb967c0c66c48b3249f88eb"
+typeable@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/typeable/-/typeable-2.4.1.tgz#152da3f5818a853ef29c4ac66d13d4670fa4beb1"
 
 typedarray@^0.0.6:
   version "0.0.6"
@@ -4722,12 +4744,12 @@ vali-date@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/vali-date/-/vali-date-1.0.0.tgz#1b904a59609fb328ef078138420934f6b86709a6"
 
-validatable@^0.24.0:
-  version "0.24.1"
-  resolved "https://registry.yarnpkg.com/validatable/-/validatable-0.24.1.tgz#9b71c46b5fb633e8235cf5ea6bb69070d1fdd14e"
+validatable@^0.34.2:
+  version "0.34.2"
+  resolved "https://registry.yarnpkg.com/validatable/-/validatable-0.34.2.tgz#026149b62e25ef016a666075f237d7fcbc89766b"
   dependencies:
-    lodash.merge "^4.6.0"
-    typeable "^2.0.0"
+    lodash.merge "^4.6.1"
+    typeable "^2.4.1"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
